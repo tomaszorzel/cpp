@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1496835897 source:c:\users\etomorz\documents\code bloks programs\predkosc_srednia\main.cpp
+	<iostream>
+	<string.h>
+	<cstring>
+

@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1510924909 source:c:\users\etomorz\documents\code bloks programs\flamaster\main.cpp
+	<iostream>
+	<sstream>
+	<string>
+

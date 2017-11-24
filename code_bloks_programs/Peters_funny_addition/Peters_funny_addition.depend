@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1510929181 source:c:\users\etomorz\documents\code bloks programs\peters_funny_addition\main.cpp
+	<iostream>
+	<sstream>
+	<bits/stdc++.h>
+
