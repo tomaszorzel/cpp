@@ -1,23 +1,18 @@
 #include <iostream>
-#include <string>
+#include <vector>
 using namespace std;
 
 int main()
 {
-    string numbers;
-    cin >> numbers;
-    int length = numbers.size(); cout << "length=" << length << endl;
-    int dynArrLen=(length+1)/2; cout << "dynArrLen=" << dynArrLen << endl;
-    int* dynArr = new int[dynArrLen];
-
-    for (int i=0, j=0; i<dynArrLen; i++, j+=2) {
-        dynArr[i]=numbers[j];
-        cout << numbers [j] << endl;
+    int n;
+    vector<int> providedNumbers;
+    while (cin>>n) {
+        providedNumbers.push_back(n);
     }
-
-    for (int i=0; i<dynArrLen; i++) {
-        cout << dynArr[i] << endl;
+    for(vector<int>::iterator it=providedNumbers.end()-1;
+            it!=providedNumbers.begin(); it--) {
+        cout<<*it<<" ";
     }
-    cout << endl;
+    cout<<*providedNumbers.begin();
     return 0;
 }
