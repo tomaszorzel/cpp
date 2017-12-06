@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1512566279 source:c:\users\etomorz\documents\cpp\code_bloks_programs\positional_systems\main.cpp
+	<iostream>
+	<string>
+	<sstream>
+
