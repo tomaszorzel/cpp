@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1513602435 source:c:\users\etomorz\documents\cpp\code_bloks_programs\pseudo-mathematical_tournament\main.cpp
+	<iostream>
+	<vector>
+	<algorithm>
+
