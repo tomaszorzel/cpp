@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1515610091 source:c:\users\tomek\desktop\tomasz\c++ nauka\repo\cpp\code_bloks_programs\spaces\main.cpp
+	<iostream>
+	<cctype>
+
