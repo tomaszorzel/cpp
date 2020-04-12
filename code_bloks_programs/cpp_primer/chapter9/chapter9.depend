@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1586680997 source:c:\users\tomek\desktop\tomasz\c++ nauka\c++_primer\chapter9\main.cpp
+	<iostream>
+	<vector>
+	<list>
+	<forward_list>
+	<deque>
+	<map>
+

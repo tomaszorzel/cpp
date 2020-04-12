@@ -42,7 +42,7 @@ ostream &print(ostream &os, const Sales_data &sd) {
 int main(int argc, char *argv[]) {
 	ifstream records(argv[1]);
 	if (records) {
-		ofstream out(argv[2]);
+		ofstream out(argv[2], ofstream::app);
 		if (!out) {
 			cout << "Error: Cannot open file to write" << endl;
 			return 1;
