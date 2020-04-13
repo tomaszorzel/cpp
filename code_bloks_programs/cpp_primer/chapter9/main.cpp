@@ -213,6 +213,45 @@ void addPrefixMrOrMsAndSuffixJrOrIIIUsingPositionAndLengthInInsertFunction() {
   cout << grandson << endl;
 }
 
+#define SECTION_953
+void findNumericAndAlphabeticCharInStringUsingFindFirstOf() {
+  cout << "\findNumericAndAlphabeticCharInStringUsingFindFirstOf():\n";
+  string s = "ab2c3d7R4E6";
+
+  string numbers = "0123456789";
+  string::size_type pos = 0;
+  while ( (pos = s.find_first_of(numbers, pos)) != string::npos ) {
+    cout << "Found number " << s.at(pos) << " at index " << pos << endl;
+    ++pos;
+  }
+
+  string alphabet = "abcdefghijklmnopqrstUwxyzABCDEFGHIJKLMNOPQRSTUWXYZ";
+  pos = 0;
+  while ( (pos = s.find_first_of(alphabet, pos)) != string::npos) {
+    cout << "Found alphabetic char " << s.at(pos) << " at index " << pos << endl;
+    ++pos;
+  }
+}
+
+void findNumericAndAlphabeticCharInStringUsingFindFirstNotOf() {
+  cout << "\nfindNumericAndAlphabeticCharInStringUsingFindFirstNotOf():\n";
+  string s = "ab2c3d7R4E6";
+
+  string alphabet = "abcdefghijklmnopqrstUwxyzABCDEFGHIJKLMNOPQRSTUWXYZ";
+  string::size_type pos = 0;
+  while ( (pos = s.find_first_not_of(alphabet, pos)) != string::npos ) {
+    cout << "Found number " << s.at(pos) << " at index " << pos << endl;
+    ++pos;
+  }
+
+  string numbers = "0123456789";
+  pos = 0;
+  while ( (pos = s.find_first_not_of(numbers, pos)) != string::npos ) {
+    cout << "Found alphabetic char " << s.at(pos) << " at index " << pos << endl;
+    ++pos;
+  }
+}
+
 int main()
 {
   forward_list<string> fwdLst2 = {"stringA", "stringB", "stringC", "stringD" };
@@ -410,6 +449,11 @@ int main()
   addPrefixMrOrMsAndSuffixJrOrIIIUsingIteratorsInInsertFunction();
   addPrefixMrOrMsAndSuffixJrOrIIIUsingPositionAndLengthInInsertFunction();
   #endif // SECTION_952
+
+  #ifdef SECTION_953
+  findNumericAndAlphabeticCharInStringUsingFindFirstOf();
+  findNumericAndAlphabeticCharInStringUsingFindFirstNotOf();
+  #endif // SECTION_953
 
   return 0;
 }
