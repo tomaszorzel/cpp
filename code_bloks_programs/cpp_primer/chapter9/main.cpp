@@ -4,6 +4,7 @@
 #include <forward_list>
 #include <deque>
 #include <map>
+#include <fstream>
 using namespace std;
 
 vector<int>::iterator isInVec(vector<int>::iterator beg, vector<int>::iterator end, int number) {
@@ -252,6 +253,26 @@ void findNumericAndAlphabeticCharInStringUsingFindFirstNotOf() {
   }
 }
 
+void findLongestWordWithoutAscendersOrDescendersInFile() {
+  cout << "\nfindLongestWordWithoutAscendersOrDescendersInFile():\n";
+  string ascenders = "bdfhklt";
+  string descenders = "gjpqqy";
+  string longestWord, word;
+  string fileToCheckName = "fileToCheck.txt";
+
+  ifstream fileToCheck(fileToCheckName);
+  if (fileToCheck) {
+    while (fileToCheck >> word)
+      if (word.find_first_of(ascenders) == string::npos && word.find_first_of(descenders) == string::npos)
+        if (word.length() > longestWord.length())
+          longestWord = word;
+
+    cout << "Longest word that contains neither ascenders nor descenders is \"" << longestWord << "\" and has length of " << longestWord.length() << endl;
+  } else {
+    cout << "Failed to open the file " << fileToCheckName << endl;
+  }
+}
+
 int main()
 {
   forward_list<string> fwdLst2 = {"stringA", "stringB", "stringC", "stringD" };
@@ -453,6 +474,7 @@ int main()
   #ifdef SECTION_953
   findNumericAndAlphabeticCharInStringUsingFindFirstOf();
   findNumericAndAlphabeticCharInStringUsingFindFirstNotOf();
+  findLongestWordWithoutAscendersOrDescendersInFile();
   #endif // SECTION_953
 
   return 0;
