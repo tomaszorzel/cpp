@@ -5,6 +5,8 @@
 #include <deque>
 #include <map>
 #include <fstream>
+#include <algorithm>
+#include <stack>
 using namespace std;
 
 vector<int>::iterator isInVec(vector<int>::iterator beg, vector<int>::iterator end, int number) {
@@ -273,6 +275,118 @@ void findLongestWordWithoutAscendersOrDescendersInFile() {
   }
 }
 
+#define SECTION_955
+void produceIntsFromVecOfNumbersAsStrings() {
+  cout << "\nproduceIntsFromVecOfNumbersAsStrings():\n";
+
+  vector<string> vs = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+  int sumi = 0;
+  double sumd = 0.0;
+  for (auto s : vs) {
+    sumi += stoi(s);
+    sumd += stod(s);
+  }
+  cout << "sum of int elements kept in vector of strings: " << sumi << endl;
+  cout << "sum of foating-point elements kept in vector of strings: " << sumd << endl;
+}
+
+class Date {
+private:
+  unsigned year;
+  unsigned month;
+  unsigned day;
+public:
+  Date(string date);
+};
+
+Date::Date(string date) {
+  cout << "\nCtor Date(string date):\n";
+  string numbers = "0123456789";
+  string alphabet = "abcdefghijklmnopqrstuwxyz";
+
+  // change date given to ctor to lower case
+  std::for_each(date.begin(), date.end(), [](char & c){
+    c = ::tolower(c);
+  });
+
+  size_t bpos = 0, epos = 0;
+  bpos = date.find_first_of(alphabet);
+  if (bpos != string::npos) {
+    // month given as a word
+    epos = date.find_first_not_of(alphabet);
+    string monthStr = date.substr(bpos, epos);
+    date.erase(bpos, epos);
+
+    // conclude month basing on monthStr
+    vector<string> months = {"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"};
+    for (int i=0; i<months.size(); ++i) {
+      if (monthStr.find(months.at(i)) != string::npos) {
+        month = i+1;
+        break;
+      }
+    }
+
+    // get day and year from date string
+    bpos = date.find_first_of(numbers);
+    epos = date.find_first_not_of(numbers, bpos);
+
+    string dayStr = date.substr(bpos, epos);
+    day = stoi(dayStr);
+    date.erase(bpos, epos);
+
+    bpos = date.find_first_of(numbers);
+    date.erase(date.begin(), date.begin()+bpos);
+    epos = date.find_first_not_of(numbers);
+    string yearStr;
+    if (epos != string::npos) {
+      yearStr = date.substr(0, epos);
+    } else {
+      yearStr = date;
+    }
+    year = stoi(yearStr);
+
+  } else {
+    // month given as a number
+    bpos = 0;
+    epos = date.find_first_not_of(numbers);
+    month = stoi(date);
+    date.erase(bpos, epos+1);
+    day = stoi(date);
+    epos = date.find_first_not_of(numbers);
+    date.erase(bpos, epos+1);
+    year = stoi(date);
+  }
+
+  cout << "Month: " << month << ", Day: " << day << ", Year: " << year << endl;
+ }
+
+ #define SECTION_96
+ void useStackToProcessParenthesizedExpressions() {
+  cout << "\nuseStackToProcessParenthesizedExpressions():\n";
+  string strToProcess = "This is (Mooophy(awesome)((((wooooooooo))))) and (ocxs) over.";
+
+  stack<char> cStack;
+  for (char c : strToProcess) {
+    cStack.push(c);
+
+    if (cStack.top() == ')') {
+      while (cStack.top() != '(') {
+        cStack.pop();
+      }
+      cStack.pop(); // pop corresponding '(' too
+      cStack.push('#');
+    }
+  }
+
+  cout << "String after being processed: ";
+  string strAfterProcessing = "";
+  while(cStack.size()) {
+    strAfterProcessing.insert(0, 1, cStack.top());
+    cStack.pop();
+  }
+  cout << strAfterProcessing << endl;
+ }
+
 int main()
 {
   forward_list<string> fwdLst2 = {"stringA", "stringB", "stringC", "stringD" };
@@ -476,6 +590,14 @@ int main()
   findNumericAndAlphabeticCharInStringUsingFindFirstNotOf();
   findLongestWordWithoutAscendersOrDescendersInFile();
   #endif // SECTION_953
+
+  #ifdef SECTION_955
+  produceIntsFromVecOfNumbersAsStrings();
+  Date("12-1-1900");
+  #endif // SECTION_955
+  #ifdef SECTION_96
+  useStackToProcessParenthesizedExpressions();
+  #endif // SECTION_96
 
   return 0;
 }

@@ -7,7 +7,7 @@
 	<deque>
 	<map>
 
-1586843879 source:c:\tomasz\repo\cpp\code_bloks_programs\cpp_primer\chapter9\main.cpp
+1587102037 source:c:\tomasz\repo\cpp\code_bloks_programs\cpp_primer\chapter9\main.cpp
 	<iostream>
 	<vector>
 	<list>
@@ -15,4 +15,6 @@
 	<deque>
 	<map>
 	<fstream>
+	<algorithm>
+	<stack>
 
