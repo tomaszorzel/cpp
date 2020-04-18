@@ -1,0 +1,28 @@
+From: https://code.visualstudio.com/docs/cpp/config-wsl
+
+1.  Make directory for the project:
+    $ mkdir helloworld
+2.  Verify that g++ and gdb are installed:
+    $ whereis g++
+    $ whereis gdb
+    
+    If not installed:
+    $ sudo apt-get install build-essential gdb
+3.  Run vscode:
+    $ cd helloworld
+    $ code .
+4.  If you click on the Remote Status bar item, you will see a dropdown of Remote commands appropriate for the session. For example, if you want to end your session running in WSL, you can select the Close Remote Connection command from the dropdown.
+5.  In the File Explorer title bar, select the New File button and name the file helloworld.cpp.
+6.  Once you create the file and VS Code detects it is a C++ language file, you may be prompted to install the Microsoft C/C++ extension if you don't already have it installed. Choose Install and then Reload Required when the button is displayed in the Extensions view to complete installing the C/C++ extension. If you already have C/C++ language extensions installed locally in VS Code, you'll need to go to the Extensions view (Ctrl+Shift+X) and install those extensions into WSL. Locally installed extensions can be installed into WSL by selecting the Install in WSL button and then Reload Required.
+7.  Add hello world source code.
+8.  Now press Ctrl+S to save the file.
+9.  From the main menu, choose Terminal > Configure Default Build Task. Choose g++ build active file. This will create a tasks.json file in a .vscode folder and open it in the editor.
+10. Go back to helloworld.cpp. Run the build task defined in tasks.json, press Ctrl+Shift+B or from the Terminal main menu choose Tasks: Run Build Task.
+11. Create a new terminal using the + button and you'll have a bash terminal running in the context of WSL with the helloworld folder as the working directory. Run:
+    $ ls
+    To see the executable file.
+12. Run executable file:
+    $ ./helloworld
+13. To debug from the main menu, choose Run > Add Configuration... and then choose C++ (GDB/LLDB). Choose g++ build and debug active file.
+14. Start debugging session by pressing F5 or from the main menu choose Run > Start Debugging.
+15. To close remote WSL session: press Ctrl+Shift+P and choose (after typing) Close Remote Connection.
