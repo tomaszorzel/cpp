@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <vector>
 #include <list>
+#include <numeric>
+#include <cstring>
 
 using std::vector;
 using std::cout;
@@ -9,6 +11,8 @@ using std::cin;
 using std::endl;
 using std::list;
 using std::string;
+using std::accumulate;
+using std::equal;
 
 #define SECTION_101
 void useCountAlgorithmForVecOfInts() {
@@ -25,6 +29,23 @@ void useCountAlgorithmForListOfStrings() {
     cout << "Counter: " << counter << endl;
 }
 
+#define SECTION_10_2_1
+void accumulateSumOfIntsInVec() {
+    cout << "\naccumulateSumOfIntsInVec\n";
+    vector<int> vi = {100, 200, 300, 333};
+    int sum = accumulate(vi.cbegin(), vi.cend(), 0);
+    cout << "Sum of elements in vi using accumulate: " << sum << endl;
+
+    vector<double> vd = {3.14, 2.00, 4.02};
+    double sumd = accumulate(vd.cbegin(), vd.cend(), double(0));
+    cout << "Sum of elements in vd using accumulate: " << sumd << endl;
+
+    const char* roster1 = "Have a nice day!"; 
+    const char* roster2 = "Have a nice day!";
+    
+    cout << "Call equal on two cstrings: " << equal(roster1, roster1+strlen(roster1), roster2) << endl;
+}
+
 int main() {
 
     #ifdef SECTION_101
@@ -32,5 +53,9 @@ int main() {
     useCountAlgorithmForListOfStrings();
     #endif // SECTION_101
 
+    #ifdef SECTION_10_2_1
+    accumulateSumOfIntsInVec();
+    #endif // SECTION_10_2_1
+    
     return 0;
 }
