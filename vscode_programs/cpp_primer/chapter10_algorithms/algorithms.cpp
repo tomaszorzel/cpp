@@ -2,9 +2,12 @@
 #include <algorithm> // std::equal, std::fill_n, std::partition
 #include <vector>
 #include <list>
+#include <deque>
 #include <numeric> // std::accumulate
 #include <cstring>
 #include <iterator> // back_inserter
+#include <functional> //bind
+#include <fstream> // ifstream
 
 using std::vector;
 using std::cout;
@@ -15,6 +18,8 @@ using std::string;
 using std::accumulate;
 using std::equal;
 using std::fill_n;
+using std::placeholders::_1;
+using std::deque;
 
 template<typename T>
 void printElemsInSeqContainerWithSpaceBetween(T t) {
@@ -233,6 +238,181 @@ void biggies() {
     printElemsInSeqContainerWithSpaceBetween(vs); cout << endl;
 }
 
+#define SECTION_10_3_3
+void countHowManyWordsHaveLengthOfGivenValue() {
+    cout << "\ncountHowManyWordsHaveLengthOfGivenValue():\n";
+    vector<string> vs = 
+    {
+        "the", "government", "plans", "to", "set", "up", "the", "first", "of", "a", "series", "of", "regular",
+        "meetings", "involving", "senior", "medical", "directors", "of", "the", "major", "sports", "this",
+        "week", "in", "a", "bid", "to", "return", "to", "action", "as", "soon", "as", "possible"
+    };
+    cout << "Vector: ";
+    printElemsInSeqContainerWithSpaceBetween(vs); cout << endl;
+
+    string::size_type size = 6;
+    auto howMany = count_if(vs.begin(), vs.end(), [size](const string &s){ return s.size()>=6; });
+    cout << "Number of words with length of " << size << " or more in vector: " << howMany << endl;
+}
+
+void useLambdaExprToDecrementIntTillZero() {
+    cout << "\nuseLambdaExprToDecrementIntTillZero()\n";
+    int n = 14;
+    cout << "n before decrementation with lambda expr: " << n << endl;
+    auto decrement = [&n]() -> bool {
+        while (n!=0) {
+            --n;
+            // cout << "decremented ";
+        }
+        // cout << endl;
+        return n==0;
+    };
+    cout << "n decremented?: " << decrement() <<  ". Value of n: " << n << endl;
+}
+
+#define SECTION_10_3_4
+bool checkSize(const string &s, const int size) {
+    return s.size() >= size;
+}
+
+bool checkSize2(const string &s, const int size) {
+    return s.size() < size;
+}
+
+void useBindFuncInPlaceOfLambda() {
+    cout << "\nuseBindFuncInPlaceOfLambda():\n";
+    vector<string> vs = 
+    {
+        "the", "government", "plans", "to", "set", "up", "the", "first", "of", "a", "series", "of", "regular",
+        "meetings", "involving", "senior", "medical", "directors", "of", "the", "major", "sports", "this",
+        "week", "in", "a", "bid", "to", "return", "to", "action", "as", "soon", "as", "possible"
+    };
+    cout << "Vector: ";
+    printElemsInSeqContainerWithSpaceBetween(vs); cout << endl;
+    string::size_type size = 6;
+    
+    auto howMany = count_if(vs.begin(), vs.end(), bind(checkSize, _1, size));
+    cout << "Number of words with length of " << size << " or more in vector: " << howMany << endl;
+}
+
+void useBindFuncToFindFirstIntInVecThatHasValueGreaterThanGivenString() {
+    cout << "\nuseBindFuncToFindFirstIntInVecThatHasValueGreaterThanGivenString():\n";
+    string controlString = "control"; // length of 7
+    vector<int> vi = {1,2,3,4,5,6,7,7,4,8};
+    cout << "Vector of ints: ";
+    printElemsInSeqContainerWithSpaceBetween(vi); cout << endl;
+    cout << "Length of \"" << controlString << "\" is: " << controlString.length() << endl;
+    auto firstValueGreaterThanLengthOfGivenString = find_if(vi.begin(), vi.end(), bind(checkSize2, cref(controlString), _1));
+    cout << "First value in vector that is greater than length of given string is: " << *firstValueGreaterThanLengthOfGivenString << endl;
+}
+
+void biggies2() {
+    cout << "\nbiggies2():\n";
+    vector<string> vs = 
+    {
+        "the", "government", "plans", "to", "set", "up", "the", "first", "of", "a", "series", "of", "regular",
+        "meetings", "involving", "senior", "medical", "directors", "of", "the", "major", "sports", "this",
+        "week", "in", "a", "bid", "to", "return", "to", "action", "as", "soon", "as", "possible"
+    };
+
+    cout << "Vector before sorting: ";
+    printElemsInSeqContainerWithSpaceBetween(vs); cout << endl;
+    sort(vs.begin(), vs.end());
+    cout << "Vector after sorting: ";
+    printElemsInSeqContainerWithSpaceBetween(vs); cout << endl;
+
+    // Lambda expression:
+    auto isShorter = [] (const string &s1, const string &s2) -> bool {
+        // cout << "// Lambda is shorter called" << endl;
+        return s1.size() < s2.size();
+    };
+
+    stable_sort(vs.begin(), vs.end(), isShorter);
+    cout << "Vector after stable sorting: ";
+    printElemsInSeqContainerWithSpaceBetween(vs); cout << endl;
+
+    // Eliminate duplicates
+    auto firstNonUniqueWord = unique(vs.begin(), vs.end());
+    cout << "Vector after moving non unique words to the end of it: ";
+    printElemsInSeqContainerWithSpaceBetween(vs); cout << endl << "Size is: " << vs.size() << endl;
+    vs.erase(firstNonUniqueWord, vs.end());
+    cout << "Vector after erasing non unique words: ";
+    printElemsInSeqContainerWithSpaceBetween(vs); cout << endl << "Size is: " << vs.size() << endl;
+
+    // Print only elements of given size or longer
+    cout << "Print only elements of given size (5) or longer: ";
+    string::size_type givenSize = 5;
+    // use find_if + lambda expr
+    // auto firstElemOfGivenSize = find_if( vs.begin(), vs.end(), [givenSize](const string &s) { return s.size() >= givenSize; } );
+    // use partition or stable_partition + lambda expr
+    // auto firstElemOfGivenSize = stable_partition(vs.begin(), vs.end(), [givenSize](const string &s) { return s.size() < givenSize; } );
+    auto firstElemOfGivenSize = stable_partition(vs.begin(), vs.end(), bind(checkSize2, _1, givenSize));
+    for (auto it = firstElemOfGivenSize; it!=vs.end(); ++it) {
+        cout << *it << " ";
+    }
+    cout << endl;
+    cout << "Current vector arrangement: ";
+    printElemsInSeqContainerWithSpaceBetween(vs); cout << endl;
+}
+
+#define SECTION_10_4_1
+void uniqeCopyToInitiallyEmptyList(){
+    cout << "\nuniqeCopyToInitiallyEmptyList():\n";
+    list<int> li = {1,1,1,2,2,3,4,3,5,6,7,8,9,10,1,3,4,5,6,7,8,8};
+    cout << "List1: ";
+    printElemsInSeqContainerWithSpaceBetween(li); cout << endl;
+    list<int> li2; // empty list
+    unique_copy(li.begin(), li.end(), inserter(li2, li2.begin()));
+    cout << "List2 after using unique_copy to fill it: ";
+    printElemsInSeqContainerWithSpaceBetween(li2); cout << endl;
+}
+
+void use3InsertersToFillEmptyVecs() {
+    cout << "\nuse3InsertersToFillEmptyVecs():\n";
+    vector<int> vi = {1,2,3,4,5,6,7,8,9};
+    deque<int> di;
+    vector<int> vi3, vi4; // empty vecs
+    cout << "vi: "; printElemsInSeqContainerWithSpaceBetween(vi); cout << endl;
+    cout << "Test front_inserter for di; di: ";
+    copy(vi.begin(), vi.end(), front_inserter(di));
+    printElemsInSeqContainerWithSpaceBetween(di); cout << endl;
+    cout << "Test inserter for vi3; vi3: ";
+    copy(vi.begin(), vi.end(), inserter(vi3, vi3.begin()));
+    printElemsInSeqContainerWithSpaceBetween(vi3); cout << endl;
+    cout << "Test back_inserter for vi4; vi4: ";
+    copy(vi.begin(), vi.end(), back_inserter(vi4));
+    printElemsInSeqContainerWithSpaceBetween(vi4); cout << endl;
+}
+
+#define SECTION_10_4_2
+void useStreamIteratorToReadFile() {
+    cout << "\nuseStreamIteratorToReadFile():\n";
+    std::ifstream inputFile("sport_news_05_05_2020.txt");
+    vector<string> vs;
+    if (inputFile) {
+        std::istream_iterator<string> in(inputFile), eof;
+        vs = vector<string>(in, eof);
+    } else {
+        cout << "Failed to open the file" << endl;
+    }
+    cout << "Vector read from file with stream iterator: size: " << vs.size() << ", content: ";
+    printElemsInSeqContainerWithSpaceBetween(vs); cout << endl;
+}
+
+void useStreamIteratorToReadIntsFromStdInSortAndPrintOnStdOut() {
+    cout << "\nuseStreamIteratorToReadIntsFromStdInSortAndPrintOnStdOut():\n";
+    std::istream_iterator<int> in_iter(cin), eof; 
+    vector<int> vi(in_iter, eof); 
+    sort(vi.begin(), vi.end());
+    std::ostream_iterator<int> out_iter(cout, " ");
+    cout << "Vector of sorted ints read from std input: ";
+    copy(vi.begin(), vi.end(), out_iter);
+    cout << endl;
+    cout << "Vector of sorted and unique ints read from std input: ";
+    unique_copy(vi.begin(), vi.end(), out_iter);
+    cout << endl;
+}
+
 int main() {
 
     #ifdef SECTION_101
@@ -264,6 +444,27 @@ int main() {
     useLambdaToSumTwoInts2();
     biggies(); // Having vector of strings, eliminate duplicates and sort them. Then print only those that are longer or equal to given size.
     #endif // SECTION_10_3_2
+
+    #ifdef SECTION_10_3_3
+    countHowManyWordsHaveLengthOfGivenValue();
+    useLambdaExprToDecrementIntTillZero();
+    #endif // SECTION_10_3_3
+
+    #ifdef SECTION_10_3_4
+    useBindFuncInPlaceOfLambda();
+    useBindFuncToFindFirstIntInVecThatHasValueGreaterThanGivenString();
+    biggies2();
+    #endif // SECTION_10_3_4
+
+    #ifdef SECTION_10_4_1
+    uniqeCopyToInitiallyEmptyList();
+    use3InsertersToFillEmptyVecs();
+    #endif // SECTION_10_4_1
+
+    #ifdef SECTION_10_4_2
+    useStreamIteratorToReadFile();
+    useStreamIteratorToReadIntsFromStdInSortAndPrintOnStdOut();
+    #endif // SECTION_10_4_2
 
     return 0;
 }

@@ -28,6 +28,7 @@ public:
   }
   friend std::istream &read(std::istream &, Sales_data &);
   friend std::ostream &print(std::ostream &, const Sales_data &);
+  friend std::ostream &operator<<(std::ostream &os, const Sales_data&);
 };
 
 std::istream &read(std::istream &is, Sales_data &sd) {
@@ -36,6 +37,11 @@ std::istream &read(std::istream &is, Sales_data &sd) {
 }
 
 std::ostream &print(std::ostream &os, const Sales_data &sd) {
+  os << sd.bookNo << " " << sd.unitsSold << " " << sd.revenue << std::endl;
+  return os;
+}
+
+std::ostream &operator<<(std::ostream &os, const Sales_data & sd) {
   os << sd.bookNo << " " << sd.unitsSold << " " << sd.revenue << std::endl;
   return os;
 }
