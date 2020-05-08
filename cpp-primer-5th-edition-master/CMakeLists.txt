@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 2.8)
+project(Cpp-Primer-5th-Exercises)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+add_subdirectory(src/chapter01)
+add_subdirectory(src/chapter02)
+add_subdirectory(src/chapter03)
+add_subdirectory(src/chapter04)
+add_subdirectory(src/chapter05)
+add_subdirectory(src/chapter06)
+add_subdirectory(src/chapter07)
+add_subdirectory(src/chapter08)
+add_subdirectory(src/chapter09)
+add_subdirectory(src/chapter10)
+add_subdirectory(src/chapter11)
+add_subdirectory(src/chapter13)
+add_subdirectory(src/chapter14)
