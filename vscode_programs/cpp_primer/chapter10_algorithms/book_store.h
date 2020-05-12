@@ -26,10 +26,18 @@ public:
   inline double avg_price() const {
   	return unitsSold ? revenue/unitsSold : 0.0;
   }
+  Sales_data& operator+=(const Sales_data &sd);
+
   friend std::istream &read(std::istream &, Sales_data &);
   friend std::ostream &print(std::ostream &, const Sales_data &);
   friend std::ostream &operator<<(std::ostream &os, const Sales_data&);
 };
+
+Sales_data& Sales_data::operator+=(const Sales_data &sd) {
+  unitsSold += sd.unitsSold;
+  revenue += revenue;
+  return *this;
+}
 
 std::istream &read(std::istream &is, Sales_data &sd) {
   is >> sd.bookNo >> sd.unitsSold >> sd.revenue;

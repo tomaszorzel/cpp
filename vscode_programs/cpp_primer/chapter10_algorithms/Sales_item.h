@@ -72,6 +72,8 @@ private:
     std::string bookNo;      // implicitly initialized to the empty string
     unsigned units_sold = 0; // explicitly initialized
     double revenue = 0.0;
+public:
+    friend std::istream &read(std::istream &, Sales_item &);
 };
 
 // used in chapter 10
@@ -142,4 +144,10 @@ double Sales_item::avg_price() const
     else
         return 0;
 }
+
+std::istream &read(std::istream &is, Sales_item &sd) {
+  is >> sd.bookNo >> sd.units_sold >> sd.revenue;
+  return is;
+}
+
 #endif
