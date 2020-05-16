@@ -384,7 +384,7 @@ void use3InsertersToFillEmptyVecs() {
     printElemsInSeqContainerWithSpaceBetween(vi4); cout << endl;
 }
 
-#define SECTION_10_4_2
+// #define SECTION_10_4_2
 void useStreamIteratorToReadFile() {
     cout << "\nuseStreamIteratorToReadFile():\n";
     std::ifstream inputFile("sport_news_05_05_2020.txt");
@@ -411,6 +411,68 @@ void useStreamIteratorToReadIntsFromStdInSortAndPrintOnStdOut() {
     cout << "Vector of sorted and unique ints read from std input: ";
     unique_copy(vi.begin(), vi.end(), out_iter);
     cout << endl;
+}
+
+#define SECTION_10_4_3
+void useReverseItersToPrintVecInReverseOrder() {
+    cout << "useReverseItersToPrintVecInReverseOrder():\n";
+    vector<int> vi = {1,2,3,4,5,6,7,8,9};
+    std::ostream_iterator<int> out(cout, " ");
+    for (vector<int>::const_reverse_iterator rit = vi.crbegin(); rit != vi.crend(); ++rit) {
+        out = *rit;
+    }
+    cout << endl;
+}
+
+void useOrdinaryItersToPrintVecInReverseOrder() {
+    cout << "useOrdinaryItersToPrintVecInReverseOrder():\n";
+    vector<int> vi = {1,2,3,4,5,6,7,8,9};
+    std::ostream_iterator<int> out(cout, " ");
+    for (vector<int>::const_iterator it=vi.end()-1; it!=vi.begin()-1; --it) {
+        out = *it;
+    }
+    cout << endl;
+}
+
+void findTheLastElementInListOfIntsOfValueZero() {
+    cout << "findTheLastElementInListOfIntsOfValueZero():\n";
+    list<int> li = {0,1,2,4,5,6,0,2,0,9};
+    list<int>::const_reverse_iterator cit = find(li.crbegin(), li.crend(), 0);
+    cout << *cit << endl;
+}
+
+void copyElemsFromVecToListInReverseOrder() {
+    cout << "copyElemsFromVecToListInReverseOrder():\n";
+    vector<int> vi = {0,1,2,3,4,5,6,7,8,9};
+    list<int> li;
+    vector<int>::const_reverse_iterator beg = vi.crbegin()+2;
+    vector<int>::const_reverse_iterator end = vi.crend()-3;
+    copy(beg, end, inserter(li, li.begin()));
+    cout << "vi: ";
+    printElemsInSeqContainerWithSpaceBetween(vi); cout << endl;
+    cout << "li (after reverse copy of elems from vi from pos 3 to 7): ";
+    printElemsInSeqContainerWithSpaceBetween(li); cout << endl;
+}
+
+#define SECTION_10_5_1
+/* 
+* input iterator - read (can be on the right side of an = sign), == and != supported, can be pre- and postincremented
+* output iterator - write (can be on the left side of an = sign; cannot be dereferenced on the right side), == and != supported, can be pre- and postincremented
+* forward iterator - read and write (dereferenced value can be on both sides of an = sign), == and != supported, can be pre- and postincremented
+* bidirectional iterator - read and write, == and != supported, can be pre- and postincremented and decremented
+* random access iterator - read and write, == and != supported, <= and >= supported, can be pre- and postincremented and decremented, supports random access: iter+n, iter-n and += and -=
+*/
+
+#define SECTION_10_6
+void removeDupsInList() {
+    cout << "removeDupsInList():\n";
+    list<int> li = {1,1,2,2,3,4,5,5,6,2,2,2};
+    cout << "List before sort: "; printElemsInSeqContainerWithSpaceBetween(li); cout << endl;
+    li.sort();
+    cout << "List after sort: "; printElemsInSeqContainerWithSpaceBetween(li); cout << endl;
+    li.unique();
+    cout << "List after unique: "; printElemsInSeqContainerWithSpaceBetween(li); cout << endl;
+    cout << "List's size: " << li.size() << endl;
 }
 
 int main() {
@@ -465,6 +527,17 @@ int main() {
     useStreamIteratorToReadFile();
     useStreamIteratorToReadIntsFromStdInSortAndPrintOnStdOut();
     #endif // SECTION_10_4_2
+
+    #ifdef SECTION_10_4_3
+    useReverseItersToPrintVecInReverseOrder();
+    useOrdinaryItersToPrintVecInReverseOrder();
+    findTheLastElementInListOfIntsOfValueZero();
+    copyElemsFromVecToListInReverseOrder();
+    #endif // SECTION_10_4_3
+
+    #ifdef SECTION_10_6
+    removeDupsInList();
+    #endif // SECTION_10_6
 
     return 0;
 }
