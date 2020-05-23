@@ -1,0 +1,6 @@
+talk 1
+speak 4
+ride 5
+play 8
+sing 2
+listen 3
