@@ -7,6 +7,8 @@
 #include <vector>
 #include <list>
 #include <sstream>
+#include <unordered_map>
+#include <functional>
 
 #include "book_store.h"
 
@@ -497,7 +499,118 @@ int transformText() {
             }
         }
         std::cout << std::endl;
-    }    
+    }
+    return 0;
+}
+
+#define SECTION_11_4
+void countWordsInInputUsingUnorderedMap() {
+    std::cout << "\ncountWordsInInputUsingUnorderedMap():\n";
+    std::string fileName = "words.txt";
+    std::ifstream inputFile(fileName);
+    if (inputFile) {
+        std::unordered_map<std::string, size_t> words_counts;
+        std::set<std::string> exclude = {"the", "but", "and", "or", "an", "a", "of"};
+        std::string word;
+        while (inputFile >> word) {
+            word = word.substr(0, word.find(','));
+            word = word.substr(0, word.find('.'));
+            std::transform(word.begin(), word.end(), word.begin(), [](unsigned char c) {return std::tolower(c);} );
+            if (exclude.find(word) == exclude.end())
+                ++words_counts[word];
+        }
+
+        for (auto elem : words_counts) {
+            std::cout << elem.first << " occurs " << elem.second << ((elem.second>1) ? " times" : " time") << std::endl; 
+        }
+    } else {
+        std::cerr << "Failed to open " << fileName << std::endl;
+    }
+}
+
+const std::string & transform(const std::string &word, const std::unordered_map<std::string, std::string> &transformationMap) {
+    auto it = transformationMap.find(word);
+    if(it != transformationMap.cend()) {
+        return it->second;
+    } else {
+        return word;
+    }
+}
+
+int transformTextUsingUnorderedMap() {
+    std::cout << "\ntransformTextUsingUnorderedMap():\n";
+    std::string wordTransformationFileName = "word_transformation.txt";
+    std::ifstream wordTransformationFile(wordTransformationFileName);
+    if (!wordTransformationFile) {
+        std::cout << "Failed to read " << wordTransformationFileName << "!" << std::endl;
+        return 1;
+    }
+    std::unordered_map<std::string, std::string> wordTransformationMap;
+    std::string shortcut, line;
+    while (getline(wordTransformationFile, line)) {
+        std::stringstream ss(line);
+        ss >> shortcut;
+        getline(ss, line);
+        line.erase(line.begin()); // erase first " " sign in meaning of the shorcut
+        if (!line.empty())
+            wordTransformationMap[shortcut] = line;
+        else
+            std::cerr << "No value for \"" << shortcut << "\"!\n";
+    }
+    wordTransformationFile.close();
+
+    if (wordTransformationMap.empty()) {
+        std::cout << "Map is empty, something went wrong!" << std::endl;
+        return 1;
+    } else {
+        std::cout << "Map's content: \n";
+        for (auto it = wordTransformationMap.begin(); it != wordTransformationMap.end(); ++it) {
+            std::cout << it->first << " " << it->second << std::endl;
+        }
+    }
+
+    std::string textToTransformFileName = "text_to_transform.txt";
+    std::ifstream textToTransformFile(textToTransformFileName);
+    if (!textToTransformFile) {
+        std::cout << "Failed to read " << textToTransformFileName << "!" << std::endl;
+    }
+
+    std::cout << "Text tranformed:\n";
+    std::string text;
+    std::set<std::string> exclude = {"?", ",", "."};
+    while (getline(textToTransformFile, text)) {
+        std::stringstream sstream(text);
+        std::string word;
+        bool firstWord = true;
+        while (sstream >> word) {
+            if (firstWord)
+                firstWord = false;
+            else 
+                std::cout << " ";
+            
+            bool excludedSignFound = false;
+            std::string sign;
+            for (auto s : exclude) {
+                auto pos = word.find(s);
+                if (pos != std::string::npos) {
+                    excludedSignFound = true;
+                    word.erase(pos);
+                    sign = s;
+                    break; // assume that there might be only one sign in a word 
+                }
+            }
+            std::cout << transform(word, wordTransformationMap);
+            if (excludedSignFound) {
+                std::cout << sign;
+            }
+        }
+        std::cout << std::endl;
+    }
+    return 0;
+}
+
+std::string returnSimpleString() {
+    return "simpleString";
 }
 
 int main() {
@@ -542,6 +655,12 @@ int main() {
     #ifdef SECTION_11_3_6
     transformText();
     #endif // SECTION_11_3_6
+
+    #ifdef SECTION_11_4
+    countWordsInInputUsingUnorderedMap();
+    transformTextUsingUnorderedMap();
+    std::cout << "Hash for simple string: " << std::hash<std::string>()(returnSimpleString()) << std::endl;
+    #endif // SECTION_11_4
 
     return 1;
 }
