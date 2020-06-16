@@ -1,4 +1,5 @@
 #include <vector>
+#include <map>
 #include <string>
 #include <memory>
 #include <stdexcept>
@@ -423,6 +424,75 @@ void checkWhenDTORUsedWhenMemoryIsDealocated() {
     std::cout << "End of test" << std::endl;
 }
 
+// #define SECTION_12_2_2
+void practiceAllocatorClass() {
+    std::cout << "\npracticeAllocatorClass():\n";
+    std::cout << "Provide n for size of string array: ";
+    int n; 
+    std::cin >> n;
+    std::allocator<std::string> alloc;
+    auto const p = alloc.allocate(n);
+    std::string *q = p;
+    std::string s;
+    while (q != p+n && cin >> s) {
+        alloc.construct(q++, s); // allocator class seperates allocation and construction. To have an obj in allocated memory we need to construct it there explicitly
+    }
+    const size_t size = q-p; // to remember how much of the allocated memory is actually used
+
+    auto beg = p;
+    auto end = p+size;
+    for (; beg!=end; beg++)
+        std::cout << *beg << endl;
+
+    // destroy and deallocated memory
+    alloc.destroy(p);
+    alloc.deallocate(p, n);
+}
+
+#define SECTION_12_3_1
+class QueryResult {
+    std::shared_ptr<TextQuery> sptq;
+public:
+    void print(); // continue desingning the program
+};
+
+class TextQuery {
+    std::vector<string> linesInFile;
+    std::map<string, vector<unsigned>> wordInLines;
+    friend class QueryResult;
+public:
+    TextQuery(std::ifstream&);
+    QueryResult query(std::string&);
+};
+
+TextQuery::TextQuery(std::ifstream &inFile) {
+    std::string line;
+    while (getline(inFile, line)) {
+        linesInFile.push_back(line);
+    }
+}
+
+void runQueries(std::ifstream &inFile) {
+    TextQuery tq(inFile);
+    while (true) {
+        std::cout << "enter word to look for, or q to quit: ";
+        string s;
+        if ( !(std::cin >> s) || s == "q") break;
+        print(cout, tq.query(s)) << endl;
+    }
+}
+
+void findOccurencesInInputFile() {
+    std::cout << "\nfindOccurencesInInputFile():\n";
+    std::string inFileName("fileToFindOccurencesIn.txt");
+    std::ifstream inFile(inFileName);
+    if (!inFile) {
+        runQueries(inFile);
+    } else {
+        std::cout << "Failed to open " << inFileName << std::endl;
+    }
+}
+
 int main() {
     #ifdef SECTION_12_1_2
     practiceOnDynamicallyAllocatedVecNewDelete();
@@ -457,11 +527,13 @@ int main() {
 
     checkWhenDTORUsedWhenMemoryIsDealocated();
 
-    std::string *const p = new std::string[1];
-    std::string *q = p;
-    std::cout << "p=" << p << std::endl;
-    std::cout << "q=" << q << std::endl;
-    std::cout << "p+1=" << p+1 << std::endl;
+    #ifdef SECTION_12_2_2
+    practiceAllocatorClass();
+    #endif
+
+    #ifdef SECTION_12_3_1
+    findOccurencesInInputFile();
+    #endif
 
     return 0;
 }
