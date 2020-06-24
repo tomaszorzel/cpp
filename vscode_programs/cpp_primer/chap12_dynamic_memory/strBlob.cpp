@@ -449,49 +449,8 @@ void practiceAllocatorClass() {
     alloc.deallocate(p, n);
 }
 
-#define SECTION_12_3_1
-class QueryResult {
-    std::shared_ptr<TextQuery> sptq;
-public:
-    void print(); // continue desingning the program
-};
-
-class TextQuery {
-    std::vector<string> linesInFile;
-    std::map<string, vector<unsigned>> wordInLines;
-    friend class QueryResult;
-public:
-    TextQuery(std::ifstream&);
-    QueryResult query(std::string&);
-};
-
-TextQuery::TextQuery(std::ifstream &inFile) {
-    std::string line;
-    while (getline(inFile, line)) {
-        linesInFile.push_back(line);
-    }
-}
-
-void runQueries(std::ifstream &inFile) {
-    TextQuery tq(inFile);
-    while (true) {
-        std::cout << "enter word to look for, or q to quit: ";
-        string s;
-        if ( !(std::cin >> s) || s == "q") break;
-        print(cout, tq.query(s)) << endl;
-    }
-}
-
-void findOccurencesInInputFile() {
-    std::cout << "\nfindOccurencesInInputFile():\n";
-    std::string inFileName("fileToFindOccurencesIn.txt");
-    std::ifstream inFile(inFileName);
-    if (!inFile) {
-        runQueries(inFile);
-    } else {
-        std::cout << "Failed to open " << inFileName << std::endl;
-    }
-}
+//#define SECTION_12_3_1
+// text query program
 
 int main() {
     #ifdef SECTION_12_1_2
