@@ -5,18 +5,9 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 
-class TextQuery;
-class QueryResult {
-    std::shared_ptr<TextQuery> sptq;
-public:
-};
-
-std::ostream& print(std::ostream& out, QueryResult &qr) {
-
-    return out;
-}
-
+class QueryResult;
 class TextQuery {
 public:
     TextQuery(std::ifstream&);
@@ -27,11 +18,45 @@ private:
     std::map<std::string, std::shared_ptr<std::set<lineNo>>> wm;
 };
 
-TextQuery::TextQuery(std::ifstream &inFile) {
-    std::string line;
-    while (getline(inFile, line)) {
-        linesInFile.push_back(line);
+TextQuery::TextQuery(std::ifstream &inFile) : file(new std::vector<std::string>){
+    std::string text;
+    while (getline(inFile, text)) {
+        file->push_back(text);
+        int n = file->size()-1; // current line
+        std::istringstream line(text);
+        std::string word;
+        while (line >> word) {
+            auto &lines = wm[word];
+            if (!lines) {
+                lines.reset(new std::set<lineNo>);
+            }
+            lines->insert(n);
+        }
     }
+}
+
+QueryResult TextQuery::query(const std::string &sought) const {
+    static std::shared_ptr<std::set<lineNo>> nodata(new std::set<lineNo>);
+    // continue here
+}
+
+class QueryResult {
+    friend std::ostream &print(std::ostream&, const QueryResult&);
+    using lineNo = std::vector<std::string>::size_type;
+public:
+    QueryResult(std::string s,
+                std::shared_ptr<std::set<lineNo>> p,
+                std::shared_ptr<std::vector<std::string>> f) :
+                sought(s), lines(p), file(f) {}
+private:
+    std::string sought;
+    std::shared_ptr<std::set<lineNo>> lines;
+    std::shared_ptr<std::vector<std::string>> file;
+};
+
+std::ostream& print(std::ostream& out, const QueryResult &qr) {
+
+    return out;
 }
 
 void runQueries(std::ifstream &inFile) {
