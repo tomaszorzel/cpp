@@ -35,11 +35,6 @@ TextQuery::TextQuery(std::ifstream &inFile) : file(new std::vector<std::string>)
     }
 }
 
-QueryResult TextQuery::query(const std::string &sought) const {
-    static std::shared_ptr<std::set<lineNo>> nodata(new std::set<lineNo>);
-    // continue here
-}
-
 class QueryResult {
     friend std::ostream &print(std::ostream&, const QueryResult&);
     using lineNo = std::vector<std::string>::size_type;
@@ -54,9 +49,26 @@ private:
     std::shared_ptr<std::vector<std::string>> file;
 };
 
-std::ostream& print(std::ostream& out, const QueryResult &qr) {
+QueryResult TextQuery::query(const std::string &sought) const {
+    static std::shared_ptr<std::set<lineNo>> nodata(new std::set<lineNo>);
+    auto loc = wm.find(sought);
+    if (loc == wm.end()) {
+        return QueryResult(sought, nodata, file);
+    } else {
+        return QueryResult(sought, loc->second, file);
+    }
+}
 
-    return out;
+std::string make_plural(unsigned cnt, std::string word, std::string postfix) {
+    return (cnt == 1) ? word : word+postfix;
+}
+
+std::ostream& print(std::ostream& os, const QueryResult &qr) {
+    os << qr.sought << " occurs " << qr.lines->size() << " " << make_plural(qr.lines->size(), "time", "s") << std::endl;
+    for (auto num : *qr.lines) {
+        os << "\t(line " << num + 1 << ") " << *(qr.file->begin() + num) << std::endl;
+    }
+    return os;
 }
 
 void runQueries(std::ifstream &inFile) {
@@ -72,15 +84,17 @@ void runQueries(std::ifstream &inFile) {
 void findOccurencesInInputFile() {
     std::cout << "\nfindOccurencesInInputFile():\n";
     std::string inFileName("fileToFindOccurencesIn.txt");
+    
     std::ifstream inFile(inFileName);
-    if (!inFile) {
+    if (inFile.is_open()) {
         runQueries(inFile);
     } else {
         std::cout << "Failed to open " << inFileName << std::endl;
     }
+    inFile.close();
 }
 
 int main() {
-    // findOccurencesInInputFile();
+    findOccurencesInInputFile();
     return 0;
 }
