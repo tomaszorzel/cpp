@@ -30,22 +30,20 @@ int main() {
             lineNumbers.insert(n);
         }
     }
-    std::cout << lines.size() << std::endl;
 
-    while (true) {
-        std::cout << "enter word to look for, or q to quit: ";
-        std::string sought;
-        if ( !(std::cin >> sought) || sought=="q")
-            break;
-
+    std::string sought;
+    std::cout << "enter word to look for, or q to quit: ";
+    if ( !(std::cin >> sought) || sought=="q")
+        return 0;
+    do {
         if (wm.find(sought) != wm.end()) {
             std::cout << sought << " occurs " << wm.at(sought).size() << std::endl;
             for (auto& elem : wm.at(sought)) {
                 std::cout << "\t(" << elem+1 << ") " << lines.at(elem) << std::endl;
             }
         }
-        
-    }
+        std::cout << "enter word to look for, or q to quit: ";
+    } while ( std::cin >> sought && sought!="q" );
 
     file.close();
     return 0;
