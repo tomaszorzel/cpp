@@ -1,20 +1,37 @@
 #ifndef MASTERMIND_H_
 #define MASTERMIND_H_
 
+#include <sys/types.h>
+
+#include <cstdint>
 #include <string>
 #include <vector>
 
-#define SIZE 4
-#define MAX_FEEDBACK_SIZE 4
-#define BLACK 'b'
-#define WHITE 'w'
-#define NO_OF_GUESSES 10
-#define GREATER_THAN_SIGN_INDEX 2
-#define CODE_INFO_IN_LOST_GAME_MSG 2
-#define SPACE_ASCII_CODE 32
+class Game {  // TODO: it would be good to have it singleton
+ public:
+  bool Play();
 
-class Game { // TODO: it would be good to have it singleton
-  char code[SIZE];
+ private:
+  char PrintWelcomMsg();
+  void NewGame();
+  void PrintOnScreen(const std::vector<std::string>&);
+  bool ValidateUsersAnswer(std::string);
+  void PutToUsersAnswer(std::string, char*);
+  bool CompareWithCode(char*, std::vector<char>&);
+  void GenerateCode();
+  void UpdateScreenMsg(std::vector<std::string>&, char*, std::vector<char>&, int);
+  void UpdateLooseMsg();
+
+  static constexpr uint8_t kSize = 4;
+  static constexpr uint8_t kMaxFeedbackSize = 4;
+  static constexpr char kBlack = 'b';
+  static constexpr char kWhite = 'w';
+  static constexpr uint8_t kNoOfGuesses = 10;
+  static constexpr uint8_t kGreaterThanSignIndex = 2;
+  static constexpr uint8_t kCodeInfoInLostGameMsg = 2;
+  static constexpr uint8_t kSpaceAsciiCode = 32;
+
+  char code[kSize];
   std::vector<std::string> welcome_msg = {
       "Welcome in Mastermind v1!\n"
       "   Options:\n"
@@ -30,18 +47,6 @@ class Game { // TODO: it would be good to have it singleton
       "|       You loose!       |\n",
       "|------------------------|\n\n",
   };
-  char print_welcome_msg();
-  void new_game();
-  void print_on_screen(const std::vector<std::string>&);
-  bool validate_users_answer(std::string);
-  void put_to_users_answer(std::string, char*);
-  bool compare_with_code(char*, std::vector<char>&);
-  void generate_code();
-  void update_screen_msg(std::vector<std::string>&, char*, std::vector<char>&, int);
-  void update_loose_msg();
-
- public:
-  bool play();
 };
 
 #endif  // MASTERMIND_H_

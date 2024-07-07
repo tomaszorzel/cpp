@@ -1,9 +1,8 @@
-#include <iostream>
 #include "mastermind.h"
 
 int main()
 {
     Game game;
-    while(game.play()){ }
+    while(game.Play()){ }
     return 0;
 }
