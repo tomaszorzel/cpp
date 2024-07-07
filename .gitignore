@@ -1,2 +1,2 @@
-*.out
 others/mastermind/out/*
+others/mastermind/.cache*

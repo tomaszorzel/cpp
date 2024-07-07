@@ -1,0 +1,12 @@
+[
+    {
+        "command": "g++ -g -Wall src/mastermind.cpp play_mastermind.cpp -Iinc -o out/play_mastermind",
+        "directory": "/home/tomasz/repo/cpp/others/mastermind",
+        "file": "/home/tomasz/repo/cpp/others/mastermind/src/mastermind.cpp"
+    },
+    {
+        "command": "g++ -g -Wall src/mastermind.cpp play_mastermind.cpp -Iinc -o out/play_mastermind",
+        "directory": "/home/tomasz/repo/cpp/others/mastermind",
+        "file": "/home/tomasz/repo/cpp/others/mastermind/play_mastermind.cpp"
+    }
+]

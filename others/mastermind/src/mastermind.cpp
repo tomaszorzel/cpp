@@ -132,7 +132,7 @@ void Game::update_screen_msg(vector<string>& screen_msg, char* users_answer, vec
         }
     }
 
-    for (int i=0; i<feedback.size(); i++) // feedback.length() won't be longer than 4
+    for (long unsigned int i=0; i<feedback.size(); i++) // feedback.length() won't be longer than 4
     {
         screen_msg[guess] += feedback[i];
     }
@@ -175,7 +175,7 @@ bool Game::compare_with_code(char* users_answer, vector<char>& feedback)
             // remove 'w' from feedback and insert 'b' instead
             if (already_white_or_black.find(users_answer[i]) != already_white_or_black.end())
             {
-                for (int j=0; j<feedback.size(); j++)
+                for (long unsigned int j=0; j<feedback.size(); j++)
                 {
                     if (feedback[j] == 'w')
                     {
