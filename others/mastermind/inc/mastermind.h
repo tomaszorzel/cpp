@@ -13,8 +13,7 @@
 #define CODE_INFO_IN_LOST_GAME_MSG 2
 #define SPACE_ASCII_CODE 32
 
-class Game  // TODO: it would be good to have it singleton
-{
+class Game { // TODO: it would be good to have it singleton
   char code[SIZE];
   std::vector<std::string> welcome_msg = {
       "Welcome in Mastermind v1!\n"
