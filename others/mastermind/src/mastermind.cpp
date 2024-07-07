@@ -173,7 +173,7 @@ bool Game::compare_with_code(char* users_answer, vector<char>& feedback)
         if (code[i] == users_answer[i]) // BLACK
         {
             // remove 'w' from feedback and insert 'b' instead
-            if (already_white_or_black.find(users_answer[i]) != already_white_or_black.end());
+            if (already_white_or_black.find(users_answer[i]) != already_white_or_black.end())
             {
                 for (int j=0; j<feedback.size(); j++)
                 {
