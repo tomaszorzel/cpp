@@ -1,0 +1,23 @@
+{
+    "makefile.makefilePath": "others/mastermind",
+    "makefile.configurations": [
+        {
+            "name": "mastermind",
+            "makeArgs": ["-C", "others/mastermind"],
+            "problemMatchers": [
+                "$gcc",
+            ]
+        }
+    ],
+    "makefile.compileCommandsPath": "others/mastermind/compile_commands.json",
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/tomasz/repo/cpp/others/mastermind",
+            "binaryPath": "/home/tomasz/repo/cpp/others/mastermind/a.out",
+            "binaryArgs": []
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=others/mastermind"
+    ]
+}
