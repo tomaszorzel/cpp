@@ -1,0 +1,4 @@
+Diagnostics:
+  ClangTidy:
+    Add: '*'
+    Remove: ['llvmlibc-restrict-system-libc-headers', 'llvmlibc-implementation-in-namespace', 'llvmlibc-callee-namespace', 'modernize-use-trailing-return-type']

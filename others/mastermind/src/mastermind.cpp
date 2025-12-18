@@ -1,14 +1,14 @@
-#include "mastermind.h"
+#include "../inc/mastermind.h"
+#include <sys/types.h>
 
 #include <algorithm>
+#include <array>
 #include <chrono>
 #include <iostream>
 #include <random>
 #include <set>
 #include <thread>
 #include <vector>
-
-using namespace std;
 
 bool Game::Play() {
   system("reset");
@@ -18,7 +18,7 @@ bool Game::Play() {
       NewGame();
       break;
     case 'q':
-      cout << "Goodbye.." << endl;
+      std::cout << "Goodbye..\n";
       return false;
     default:
       break;
@@ -29,12 +29,12 @@ bool Game::Play() {
 char Game::PrintWelcomMsg() {
   PrintOnScreen(welcome_msg);
 
-  char users_answer;
+  char users_answer = 0;
 
-  cin >> users_answer;
-  while (cin && isalpha(users_answer) && (users_answer != 'n' && users_answer != 'q')) {
-    cout << "Choose option (ctrl+c to kill): ";
-    cin >> users_answer;
+  std:: cin >> users_answer;
+  while (std::cin && (isalpha(users_answer) != 0) && (users_answer != 'n' && users_answer != 'q')) {
+    std::cout << "Choose option (ctrl+c to kill): ";
+    std::cin >> users_answer;
   }
 
   return users_answer;
@@ -42,67 +42,68 @@ char Game::PrintWelcomMsg() {
 
 void Game::NewGame() {
     GenerateCode();
-    vector<string> game_screen = {
-        "|-----------------|\n",
-        "|  Mastermind v1  |\n",
-        "|  Colors codes:  |\n",
-        "|  1: blue        |\n",
-        "|  2: green       |\n",
-        "|  3: red         |\n",
-        "|  4: yellow      |\n",
-        "|  5: cyan        |\n",
-        "|  6: orange      |\n",
-        "|-----------------|\n",
-        "|  Feedback:      |\n",
-        "|  b: black       |\n",
-        "|  w: white       |\n",
-        "|-----------------|\n",
-        "|   XXXX   |      |\n",
-        "|-----------------|\n",//15th line
-        "|          |      |\n",
-        "|          |      |\n",
-        "|          |      |\n",
-        "|          |      |\n",
-        "|          |      |\n",
-        "|          |      |\n",
-        "|          |      |\n",
-        "|          |      |\n",
-        "|          |      |\n",
-        "| >        |      |\n",
-        "|-----------------|\n",
-        "Provide your answer (ctrl+c to kill): "
-    };
+    std::vector<std::string> game_screen;
+    game_screen.emplace_back("|-----------------|\n");
+    game_screen.emplace_back("|-----------------|\n");
+    game_screen.emplace_back("|  Mastermind v1  |\n");
+    game_screen.emplace_back("|  Colors codes:  |\n");
+    game_screen.emplace_back("|  1: blue        |\n");
+    game_screen.emplace_back("|  2: green       |\n");
+    game_screen.emplace_back("|  3: red         |\n");
+    game_screen.emplace_back("|  4: yellow      |\n");
+    game_screen.emplace_back("|  5: cyan        |\n");
+    game_screen.emplace_back("|  6: orange      |\n");
+    game_screen.emplace_back("|-----------------|\n");
+    game_screen.emplace_back("|  Feedback:      |\n");
+    game_screen.emplace_back("|  b: black       |\n");
+    game_screen.emplace_back("|  w: white       |\n");
+    game_screen.emplace_back("|-----------------|\n");
+    game_screen.emplace_back("|   XXXX   |      |\n");
+    game_screen.emplace_back("|-----------------|\n");  // 15th line
+    game_screen.emplace_back("|          |      |\n");
+    game_screen.emplace_back("|          |      |\n");
+    game_screen.emplace_back("|          |      |\n");
+    game_screen.emplace_back("|          |      |\n");
+    game_screen.emplace_back("|          |      |\n");
+    game_screen.emplace_back("|          |      |\n");
+    game_screen.emplace_back("|          |      |\n");
+    game_screen.emplace_back("|          |      |\n");
+    game_screen.emplace_back("|          |      |\n");
+    game_screen.emplace_back("| >        |      |\n");
+    game_screen.emplace_back("|-----------------|\n");
+    game_screen.emplace_back("Provide your answer (ctrl+c to kill): ");
 
     for (int i = kNoOfGuesses; i > 0; i--) {
       system("clear");
       PrintOnScreen(game_screen);
-      string input;
-      char users_answer[4];
-      cin >> input;
-      while (cin && !ValidateUsersAnswer(input)) {
-        cout << "Incorrect format of the answer, provide again: ";
-        cin >> input;
+      std::string input;
+      const u_int16_t answer_size = 4;
+      std::array<char, answer_size> users_answer{};
+      std::cin >> input;
+      while (std::cin && !ValidateUsersAnswer(input)) {
+        std::cout << "Incorrect format of the answer, provide again: ";
+        std::cin >> input;
       }
-      PutToUsersAnswer(input, users_answer);
-      vector<char> feedback;
-      if (CompareWithCode(users_answer, feedback)) {
+      PutToUsersAnswer(input, users_answer.data());
+      std::vector<char> feedback;
+      if (CompareWithCode(users_answer.data(), feedback)) {
         // user wins
         PrintOnScreen(win_msg);
         std::this_thread::sleep_for(std::chrono::milliseconds(3000));
         return;
       }
-      UpdateScreenMsg(game_screen, users_answer, feedback, i + 15);  // 15 is added to modify proper line
+      UpdateScreenMsg(game_screen, users_answer.data(), feedback, i + 15);  // 15 is added to modify proper line
     }
     PrintOnScreen(loose_msg);
     loose_msg.erase(loose_msg.begin() + kCodeInfoInLostGameMsg);
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 }
 
-void Game::PrintOnScreen(const vector<string>& msg) {
-  for (auto line : msg) cout << line;
+void Game::PrintOnScreen(const std::vector<std::string>& msg) {
+  for (auto line : msg) std::cout << line;
 }
 
-void Game::UpdateScreenMsg(vector<string>& screen_msg, char* users_answer, vector<char>& feedback, int guess) {
+void Game::UpdateScreenMsg(std::vector<std::string>& screen_msg, char* users_answer, std::vector<char>& feedback, int guess) {
   // add user's answer to screen msg without ">"
   screen_msg[guess] = "|   ";
   for (int i = 0; i < kSize; i++) {
@@ -131,22 +132,22 @@ void Game::UpdateScreenMsg(vector<string>& screen_msg, char* users_answer, vecto
   feedback.clear();
 }
 
-bool Game::ValidateUsersAnswer(string input) {
+bool Game::ValidateUsersAnswer(std::string input) {
   for (int i = 0; i < kSize; i++) {
     if (isdigit(input[i]) == false || input[i] < '1' || input[i] > '6') return false;
   }
   return true;
 }
 
-void Game::PutToUsersAnswer(string input, char* users_answer) {
+void Game::PutToUsersAnswer(std::string input, char* users_answer) {
   for (int i = 0; i < kSize; i++) {
     users_answer[i] = input[i];
   }
 }
 
-bool Game::CompareWithCode(char* users_answer, vector<char>& feedback) {
+bool Game::CompareWithCode(char* users_answer, std::vector<char>& feedback) {
   bool result = false;
-  set<char> already_white_or_black;
+  std::set<char> already_white_or_black;
   for (int i = 0; i < kSize; i++) {
     if (code[i] == users_answer[i])  // kBlack
     {
@@ -164,7 +165,7 @@ bool Game::CompareWithCode(char* users_answer, vector<char>& feedback) {
     } else  // kWhite
     {
       if (already_white_or_black.find(users_answer[i]) == already_white_or_black.end()) {
-        if (count(code, code + kSize, users_answer[i])) {
+        if (std::count(code, code + kSize, users_answer[i])) {
           feedback.push_back(kWhite);
           already_white_or_black.insert(users_answer[i]);
         }
@@ -180,22 +181,22 @@ bool Game::CompareWithCode(char* users_answer, vector<char>& feedback) {
 }
 
 void Game::GenerateCode() {
-  random_device os_seed;
+  std::random_device os_seed;
   const uint_least32_t seed = os_seed();
 
-  mt19937 generator(seed);
-  uniform_int_distribution<uint_least32_t> distribution(49, 54);
+  std::mt19937 generator(seed);
+  std::uniform_int_distribution<uint_least32_t> distribution(49, 54);
 
   for (int i = 0; i < kSize; i++) {
     code[i] = distribution(generator);
-    cout << code[i];
+    std::cout << code[i];
   }
-  cout << endl;
+  std::cout << std::endl;
   UpdateLooseMsg();
 }
 
 void Game::UpdateLooseMsg() {
-  string code_info = "|       Code: ";
+  std::string code_info = "|       Code: ";
   for (int i = 0; i < kSize; i++) code_info += code[i];
   code_info += "       |\n";
   loose_msg.insert(loose_msg.begin() + kCodeInfoInLostGameMsg, code_info);

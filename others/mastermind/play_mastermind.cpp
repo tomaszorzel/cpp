@@ -1,4 +1,4 @@
-#include "mastermind.h"
+#include "inc/mastermind.h"
 
 int main()
 {
