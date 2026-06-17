@@ -1,6 +1,6 @@
 CompileFlags:
-  Add: [-std=c++17]
+  Add: [-std=c++23]
 Diagnostics:
   ClangTidy:
     Add: '*'
-    Remove: ['llvmlibc*','boost-use-ranges', 'modernize-use-trailing-return-type', 'altera-unroll-loops']
+    Remove: ['llvmlibc*','boost-use-ranges', 'modernize-use-trailing-return-type', 'altera-unroll-loops', 'fuchsia-default-arguments-calls']
