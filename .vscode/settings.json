@@ -19,6 +19,7 @@
     ],
     "clangd.arguments": [
         "--compile-commands-dir=others/mastermind",
-        "--compile-commands-dir=hackerrank/test_for_arista/build/"
+        "--compile-commands-dir=hackerrank/test_for_arista/build/",
+        "--compile-commands-dir=others/disappearing_pairs/build/"
     ]
 }

@@ -1,0 +1,44 @@
+[
+{
+  "directory": "/home/teagle/repo/cpp/others/disappearing_pairs/build",
+  "command": "/usr/bin/c++   -g -Wall -g -std=gnu++23 -o CMakeFiles/DisappearingPairs.dir/DisappearingPairs.cpp.o -c /home/teagle/repo/cpp/others/disappearing_pairs/DisappearingPairs.cpp",
+  "file": "/home/teagle/repo/cpp/others/disappearing_pairs/DisappearingPairs.cpp",
+  "output": "CMakeFiles/DisappearingPairs.dir/DisappearingPairs.cpp.o"
+},
+{
+  "directory": "/home/teagle/repo/cpp/others/disappearing_pairs/build",
+  "command": "/usr/bin/c++  -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest/include -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest -g -Wall -g -std=gnu++23 -o CMakeFiles/DisappearingPairsTest.dir/DisappearingPairsTest.cpp.o -c /home/teagle/repo/cpp/others/disappearing_pairs/DisappearingPairsTest.cpp",
+  "file": "/home/teagle/repo/cpp/others/disappearing_pairs/DisappearingPairsTest.cpp",
+  "output": "CMakeFiles/DisappearingPairsTest.dir/DisappearingPairsTest.cpp.o"
+},
+{
+  "directory": "/home/teagle/repo/cpp/others/disappearing_pairs/build",
+  "command": "/usr/bin/c++  -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest/include -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest -g -Wall -g -std=gnu++23 -o CMakeFiles/DisappearingPairsTest.dir/DisappearingPairs.cpp.o -c /home/teagle/repo/cpp/others/disappearing_pairs/DisappearingPairs.cpp",
+  "file": "/home/teagle/repo/cpp/others/disappearing_pairs/DisappearingPairs.cpp",
+  "output": "CMakeFiles/DisappearingPairsTest.dir/DisappearingPairs.cpp.o"
+},
+{
+  "directory": "/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-build/googlemock",
+  "command": "/usr/bin/c++  -I/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googlemock/include -I/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googlemock -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest/include -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest -g -Wall -g -std=c++23 -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googlemock/src/gmock-all.cc",
+  "file": "/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googlemock/src/gmock-all.cc",
+  "output": "_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o"
+},
+{
+  "directory": "/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-build/googlemock",
+  "command": "/usr/bin/c++  -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googlemock/include -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googlemock -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest/include -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest -g -Wall -g -std=c++23 -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googlemock/src/gmock_main.cc",
+  "file": "/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googlemock/src/gmock_main.cc",
+  "output": "_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o"
+},
+{
+  "directory": "/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-build/googletest",
+  "command": "/usr/bin/c++  -I/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest/include -I/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest -g -Wall -g -std=c++23 -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest/src/gtest-all.cc",
+  "file": "/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest/src/gtest-all.cc",
+  "output": "_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
+},
+{
+  "directory": "/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-build/googletest",
+  "command": "/usr/bin/c++  -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest/include -isystem /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest -g -Wall -g -std=c++23 -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest/src/gtest_main.cc",
+  "file": "/home/teagle/repo/cpp/others/disappearing_pairs/build/_deps/googletest-src/googletest/src/gtest_main.cc",
+  "output": "_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
+}
+]
